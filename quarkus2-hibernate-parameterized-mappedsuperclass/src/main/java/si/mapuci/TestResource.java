@@ -1,14 +1,19 @@
 package si.mapuci;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.runtime.Startup;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
+
+import io.quarkus.runtime.StartupEvent;
+import io.smallrye.common.annotation.Blocking;
 import si.mapuci.entity.Four;
 import si.mapuci.entity.One;
 import si.mapuci.entity.Three;
@@ -21,37 +26,10 @@ public class TestResource
     @Inject
     OneRepo oneRepo;
 
-    @Startup
-    void insertSomeDataToDb()
-    {
-        oneRepo.deleteAll();
-
-        final var one = new One();
-        final var two = new Two();
-        final var three = new Three();
-        final var four = new Four();
-
-        one.setTwo(two);
-        two.getOnes().add(one);
-        two.setThree(three);
-        three.getTwos().add(two);
-        three.setFour(four);
-        four.getThrees().add(three);
-
-        one.setOneConcreteProp("oneConcrete");
-        one.setAbsOneStringProp("oneAbs");
-        two.setAbsTwoStringProp("twoAbs");
-        two.setTwoConcreteProp("twoConcrete");
-        three.setAbsThreeStringProp("threeAbs");
-        three.setThreeConcreteProp("threeConcrete");
-        four.setFourConcreteProp("fourConcrete");
-
-        oneRepo.persist(one);
-    }
-
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/this-will-fail")
+    @Blocking
     public String thisWillFail()
     {
         final var one = oneRepo.listAll().stream().findFirst().orElseThrow();
@@ -64,6 +42,7 @@ public class TestResource
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/this-will-fail-because-we-use-non-parameterized-abstract-getter-to-init-lazy-entity")
+    @Blocking
     public String thisWillNotFailBecauseWeUseNonParameterizedAbstractGetterToInitLazyEntity()
     {
         final var one = oneRepo.listAll().stream().findFirst().orElseThrow();
@@ -81,4 +60,40 @@ public class TestResource
     {
     }
 
+    @ApplicationScoped
+    static class TestDataInserter
+    {
+        @Inject
+        OneRepo oneRepo;
+
+        @Transactional
+        void onStart(@Observes StartupEvent event)
+        {
+            {
+                oneRepo.deleteAll();
+
+                final var one = new One();
+                final var two = new Two();
+                final var three = new Three();
+                final var four = new Four();
+
+                one.setTwo(two);
+                two.getOnes().add(one);
+                two.setThree(three);
+                three.getTwos().add(two);
+                three.setFour(four);
+                four.getThrees().add(three);
+
+                one.setOneConcreteProp("oneConcrete");
+                one.setAbsOneStringProp("oneAbs");
+                two.setAbsTwoStringProp("twoAbs");
+                two.setTwoConcreteProp("twoConcrete");
+                three.setAbsThreeStringProp("threeAbs");
+                three.setThreeConcreteProp("threeConcrete");
+                four.setFourConcreteProp("fourConcrete");
+
+                oneRepo.persist(one);
+            }
+        }
+    }
 }
