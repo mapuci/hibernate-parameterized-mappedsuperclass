@@ -8,5 +8,6 @@
     <modules>
         <module>quarkus3-hibernate-parameterized-mappedsuperclass</module>
         <module>quarkus2-hibernate-parameterized-mappedsuperclass</module>
+        <module>wildfly-hibernate</module>
     </modules>
 </project>
