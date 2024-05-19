@@ -1,8 +1,5 @@
 package org.jboss.as.quickstart.hibernate.reproducer.entity;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -11,22 +8,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 @Entity
-public class Four
-{
+public class Four {
     @Id
     @GeneratedValue
     private Long id;
 
     @OneToMany(mappedBy = "four", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Three> threes = new HashSet<>();
-    ;
 
     private String fourConcreteProp;
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
@@ -37,38 +35,31 @@ public class Four
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hashCode(id);
     }
 
-    public Long getId()
-    {
+    public Long getId() {
         return this.id;
     }
 
-    public Set<Three> getThrees()
-    {
+    public Set<Three> getThrees() {
         return this.threes;
     }
 
-    public String getFourConcreteProp()
-    {
+    public String getFourConcreteProp() {
         return this.fourConcreteProp;
     }
 
-    public void setThrees(Set<Three> threes)
-    {
+    public void setThrees(Set<Three> threes) {
         this.threes = threes;
     }
 
-    public void setFourConcreteProp(String fourConcreteProp)
-    {
+    public void setFourConcreteProp(String fourConcreteProp) {
         this.fourConcreteProp = fourConcreteProp;
     }
 
-    void setId(Long id)
-    {
+    void setId(Long id) {
         this.id = id;
     }
 }

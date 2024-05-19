@@ -1,28 +1,25 @@
 package org.jboss.as.quickstart.hibernate.reproducer.dataloader;
 
-import org.jboss.as.quickstart.hibernate.reproducer.entity.Four;
-import org.jboss.as.quickstart.hibernate.reproducer.entity.One;
-import org.jboss.as.quickstart.hibernate.reproducer.entity.Three;
-import org.jboss.as.quickstart.hibernate.reproducer.entity.Two;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.jboss.as.quickstart.hibernate.reproducer.entity.Four;
+import org.jboss.as.quickstart.hibernate.reproducer.entity.One;
+import org.jboss.as.quickstart.hibernate.reproducer.entity.Three;
+import org.jboss.as.quickstart.hibernate.reproducer.entity.Two;
 
 @Singleton
 @Startup
-public class TestDataInserter
-{
+public class TestDataInserter {
     @PersistenceContext
     private EntityManager em;
 
     @PostConstruct
     @Transactional
-    public void insertTestData()
-    {
+    public void insertTestData() {
         final var one = new One();
         final var two = new Two();
         final var three = new Three();

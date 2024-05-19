@@ -1,9 +1,5 @@
 package org.jboss.as.quickstart.hibernate.reproducer.entity;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -13,9 +9,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToMany;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 @MappedSuperclass
-public abstract class AbsTwo<ONE extends AbsOne<?>, THREE extends AbsThree<?, ?>>
-{
+public abstract class AbsTwo<ONE extends AbsOne<?>, THREE extends AbsThree<?, ?>> {
     @Id
     @GeneratedValue
     private Long id;
@@ -30,8 +29,7 @@ public abstract class AbsTwo<ONE extends AbsOne<?>, THREE extends AbsThree<?, ?>
     private Set<ONE> ones = new HashSet<>();
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
@@ -42,53 +40,43 @@ public abstract class AbsTwo<ONE extends AbsOne<?>, THREE extends AbsThree<?, ?>
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hashCode(id);
     }
 
-    public Long getId()
-    {
+    public Long getId() {
         return this.id;
     }
 
-    public String getAbsTwoStringProp()
-    {
+    public String getAbsTwoStringProp() {
         return this.absTwoStringProp;
     }
 
-    public THREE getThree()
-    {
+    public THREE getThree() {
         return this.three;
     }
 
-    public Set<ONE> getOnes()
-    {
+    public Set<ONE> getOnes() {
         return this.ones;
     }
 
-    public void setAbsTwoStringProp(String absTwoStringProp)
-    {
+    public void setAbsTwoStringProp(String absTwoStringProp) {
         this.absTwoStringProp = absTwoStringProp;
     }
 
-    public void setThree(THREE three)
-    {
+    public void setThree(THREE three) {
         this.three = three;
     }
 
-    public void setOnes(Set<ONE> ones)
-    {
+    public void setOnes(Set<ONE> ones) {
         this.ones = ones;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return "AbsTwo(id=" + this.getId() + ")";
     }
 
-    void setId(Long id)
-    {
+    void setId(Long id) {
         this.id = id;
     }
 }
