@@ -1,5 +1,7 @@
 # hibernate-parameterized-mappedsuperclass
-This projects demonstrates quarkus specific problems regarding lazy loading of parameterized entities from @Mapped superclass.
+This projects demonstrates
+- quarkus specific problems regarding lazy loading of parameterized associated entities from @Mapped superclass.
+- hibernate problem with constructing String based fetchGraph with GraphParser. Also with parameterized associated entities from @Mapped superclass. 
 
 ### modules
 * **_quarkus3-hibernate-parameterized-mappedsuperclass_** 
